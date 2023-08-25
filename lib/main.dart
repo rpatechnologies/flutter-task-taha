@@ -1,12 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leaveapp/controllers/login_controller.dart';
 import 'package:leaveapp/controllers/leave_balance_controller.dart'; // Import your LeaveBalanceController
 import 'package:leaveapp/screens/auth/auth_screen.dart';
+import 'package:leaveapp/services/push_notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await PushNotificationService().setupInteractedMessage();
   await initServices(); // Initialize any services if required
+  RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
   runApp(const MyApp());
 }
 
