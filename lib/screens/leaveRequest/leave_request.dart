@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leaveapp/common/widgets/custom_button.dart';
 import 'package:leaveapp/constants/global_variables.dart';
-import 'package:leaveapp/screens/leaveRequest/widgets/date_picker.dart';
-import 'package:leaveapp/screens/leaveRequest/widgets/drop_down.dart';
-import 'package:leaveapp/screens/leaveRequest/widgets/radio_widget.dart';
-import 'package:leaveapp/screens/leaveRequest/widgets/text_form_field.dart';
+import 'package:leaveapp/screens/leaveRequest/dropdown/date_picker.dart';
+import 'package:leaveapp/screens/leaveRequest/dropdown/drop_down.dart';
+import 'package:leaveapp/screens/leaveRequest/dropdown/radio_widget.dart';
+import 'package:leaveapp/screens/leaveRequest/dropdown/text_form_field.dart';
 
 class LeaveRequestScreen extends StatefulWidget {
   const LeaveRequestScreen({super.key});

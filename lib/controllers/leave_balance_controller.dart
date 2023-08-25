@@ -1,44 +1,52 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:leaveapp/utils/api_endpoints.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LeaveBalanceController extends GetxController {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  RxMap<String, dynamic> leaveBalance = <String, dynamic>{}.obs;
 
-  RxMap<String, double> leaveBalances = RxMap<String, double>();
-
-  @override
-  void onInit() {
-    super.onInit();
-    fetchLeaveBalance();
+  Future<String> _getBearerToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token') ?? '';
   }
 
-  Future<void> fetchLeaveBalance() async {
-    final SharedPreferences prefs = await _prefs;
-    final token = prefs.getString('token');
-    var headers = {
+  //  @override
+  // void onInit() {
+  //   super.onInit();
+  //   fetchLeaveBalance(userCode);
+  // }
+
+  Future<void> fetchLeaveBalance(String userCode) async {
+    var url = Uri.parse(
+        ApiEndPoints.baseUrl + ApiEndPoints.authEndpoints.employeeLeaveBalance);
+    final String bearerToken = await _getBearerToken();
+
+    final Map<String, String> headers = {
+      'Authorization': 'Bearer $bearerToken',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
     };
+
+    final Map<String, dynamic> requestBody = {
+      'user_code': userCode,
+    };
+
     try {
-      var url = Uri.parse(
-          'https://demoliveone.abshrms.com/api/attendance/getEmployeeLeaveBalance');
-      http.Response response = await http.get(url, headers: headers);
+      final http.Response response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode(requestBody),
+      );
 
       if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
-        print(json); // Debug: Print the API response
-        if (json['status'] == 'success') {
-          final data = json['data'] as Map<String, dynamic>;
-          leaveBalances.assignAll(Map.from(data)
-              .map((key, value) => MapEntry(key, value.toDouble())));
-          print(leaveBalances); // Debug: Print the leaveBalances map
-        }
+        leaveBalance.value = jsonDecode(response.body)['data'];
+      } else {
+        throw Exception('Failed to fetch leave balance');
       }
-    } catch (error) {
-      print(error.toString()); // Print any errors for debugging
+    } catch (e) {
+      throw Exception('Failed to fetch leave balance: $e');
     }
   }
 }

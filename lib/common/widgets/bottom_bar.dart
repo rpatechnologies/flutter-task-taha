@@ -1,11 +1,9 @@
-import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:leaveapp/constants/global_variables.dart';
 import 'package:leaveapp/screens/home/home.dart';
 import 'package:leaveapp/screens/leaveBalance/leave_balance.dart';
 
 class BottomBar extends StatefulWidget {
-  static const String routeName = '/actual-home';
   const BottomBar({super.key});
 
   @override
@@ -19,10 +17,10 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     const HomeScreen(),
-    const LeaveBalanceScreen(),
-    const Center(child: Text('data2')),
-    const Center(child: Text('data3')),
-    const Center(child: Text('data4')),
+    LeaveBalanceScreen(),
+    const Center(child: Text('data 2')),
+    const Center(child: Text('data 3')),
+    const Center(child: Text('data 4')),
   ];
 
   void updatePage(int page) {

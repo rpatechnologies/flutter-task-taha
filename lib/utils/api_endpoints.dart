@@ -6,4 +6,5 @@ class ApiEndPoints {
 class _AuthEndPoints {
   final String registerEmail = 'authaccount/registration';
   final String loginEmail = 'auth/login';
+  final String employeeLeaveBalance = 'attendance/getEmployeeLeaveBalance';
 }

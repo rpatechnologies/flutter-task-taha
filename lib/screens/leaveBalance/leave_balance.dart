@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:leaveapp/common/widgets/custom_button.dart';
 import 'package:leaveapp/constants/global_variables.dart';
+import 'package:leaveapp/controllers/leave_balance_controller.dart';
 import 'package:leaveapp/screens/leaveBalance/widgets/leave_table.dart';
 import 'package:leaveapp/screens/leaveBalance/widgets/leave_types.dart';
 import 'package:leaveapp/screens/leaveRequest/leave_request.dart';
@@ -16,6 +18,8 @@ class LeaveBalanceScreen extends StatefulWidget {
 }
 
 class _LeaveBalanceScreenState extends State<LeaveBalanceScreen> {
+  final LeaveBalanceController _leaveBalanceController =
+      Get.put(LeaveBalanceController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,27 +137,21 @@ class _LeaveBalanceScreenState extends State<LeaveBalanceScreen> {
                     children: [
                       LeaveTypes(
                         text: 'Sick Leave',
-                        num: 10,
                       ),
                       LeaveTypes(
                         text: 'Casual Leave',
-                        num: 12,
                       ),
                       LeaveTypes(
                         text: 'Earned Leave',
-                        num: 0,
                       ),
                       LeaveTypes(
                         text: 'Compensatory Off',
-                        num: 0,
                       ),
                       LeaveTypes(
                         text: 'On Duty',
-                        num: 0,
                       ),
                       LeaveTypes(
                         text: 'Work From Home',
-                        num: 0,
                       ),
                     ],
                   ),
@@ -183,27 +181,21 @@ class _LeaveBalanceScreenState extends State<LeaveBalanceScreen> {
                     children: [
                       LeaveTypes(
                         text: 'Sick Leave',
-                        num: 2,
                       ),
                       LeaveTypes(
                         text: 'Casual Leave',
-                        num: 3,
                       ),
                       LeaveTypes(
                         text: 'Earned Leave',
-                        num: 19,
                       ),
                       LeaveTypes(
                         text: 'Compensatory Off',
-                        num: 0,
                       ),
                       LeaveTypes(
                         text: 'On Duty',
-                        num: 0,
                       ),
                       LeaveTypes(
                         text: 'Work From Home',
-                        num: 4,
                       ),
                     ],
                   ),

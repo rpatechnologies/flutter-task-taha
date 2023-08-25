@@ -49,12 +49,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MaterialButton(
-                      color: Colors.amber,
-                      onPressed: () {
-                        isLogin.value = true;
-                      },
-                      child: Text('Login'),
+                    Text(
+                      'Login',
+                      style: TextStyle(fontSize: 20),
                     ),
                   ],
                 ),
