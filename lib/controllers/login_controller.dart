@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:leaveapp/common/widgets/bottom_bar.dart';
 import 'package:leaveapp/controllers/leave_balance_controller.dart';
 
+import 'package:leaveapp/controllers/leave_details_controller.dart'; // Make sure you import the LeaveDetailsController
 import 'package:leaveapp/utils/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,7 +23,8 @@ class LoginController extends GetxController {
         'user_code': emailController.text.trim(),
         'password': passwordController.text
       };
-      http.Response response = await http.post(url, body: jsonEncode(body), headers: headers);
+      http.Response response =
+          await http.post(url, body: jsonEncode(body), headers: headers);
 
       if (response.statusCode == 200) {
         print(response.statusCode);
@@ -33,11 +35,18 @@ class LoginController extends GetxController {
           var userCode = emailController.text.trim();
           final SharedPreferences prefs = await _prefs;
           await prefs.setString('token', token);
-
-          print(token);
-          print(userCode);
           final leaveBalanceController = Get.find<LeaveBalanceController>();
           await leaveBalanceController.fetchLeaveBalance(userCode);
+
+          final leaveDetailsController = Get.put(LeaveDetailsController());
+
+          // Assuming you have already created an instance of LeaveDetailsController
+          await leaveDetailsController.fetchLeaveDetails(
+            userCode: userCode,
+            filterMonth: '5', // You should provide the actual month here
+            filterYear: '2023', // You should provide the actual year here
+          );
+
           emailController.clear();
           passwordController.clear();
           Get.off(const BottomBar());

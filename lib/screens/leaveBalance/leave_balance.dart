@@ -278,7 +278,7 @@ class _LeaveBalanceScreenState extends State<LeaveBalanceScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const SingleChildScrollView(child: LeaveTable()),
+              SingleChildScrollView(child: LeaveTable()),
             ],
           ),
         ),
