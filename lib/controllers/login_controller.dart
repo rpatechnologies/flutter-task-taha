@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -6,10 +8,14 @@ import 'package:leaveapp/common/widgets/bottom_bar.dart';
 import 'package:leaveapp/controllers/leave_balance_controller.dart';
 
 import 'package:leaveapp/controllers/leave_details_controller.dart'; // Make sure you import the LeaveDetailsController
+import 'package:leaveapp/services/push_notification.dart';
 import 'package:leaveapp/utils/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
+  // DatabaseReference ref = FirebaseDatabase.instance.ref("/test");
+  final CollectionReference postsRef = FirebaseFirestore.instance.collection('/test');
+  final _firebaseMessaging = FirebaseMessaging.instance;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -17,8 +23,7 @@ class LoginController extends GetxController {
   Future<void> loginWithEmail() async {
     var headers = {'Content-Type': 'application/json'};
     try {
-      var url = Uri.parse(
-          ApiEndPoints.baseUrl + ApiEndPoints.authEndpoints.loginEmail);
+      var url = Uri.parse(ApiEndPoints.baseUrl + ApiEndPoints.authEndpoints.loginEmail);
       Map body = {
         'user_code': emailController.text.trim(),
         'password': passwordController.text
@@ -37,6 +42,28 @@ class LoginController extends GetxController {
           await prefs.setString('token', token);
           final leaveBalanceController = Get.find<LeaveBalanceController>();
           await leaveBalanceController.fetchLeaveBalance(userCode);
+
+          String role = await PushNotifications.getRoleOfUser(userCode);
+          if(role == "Admin"){
+            print(role);
+            try{
+              await _firebaseMessaging.requestPermission();
+              final fCMToken = await _firebaseMessaging.getToken();
+              await postsRef.doc(userCode).set(
+                  {
+                    "role": "Manager",
+                    "device_id": fCMToken,
+                    "id": userCode,
+                  }
+              );
+              print("Succsess");
+            }catch(e){
+              print("error");
+            }
+          }else{
+            print(role);
+            print("role is not admin");
+          }
 
           final leaveDetailsController = Get.put(LeaveDetailsController());
 

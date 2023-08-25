@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:leaveapp/common/widgets/custom_button.dart';
@@ -6,6 +7,10 @@ import 'package:leaveapp/screens/leaveRequest/dropdown/date_picker.dart';
 import 'package:leaveapp/screens/leaveRequest/dropdown/drop_down.dart';
 import 'package:leaveapp/screens/leaveRequest/dropdown/radio_widget.dart';
 import 'package:leaveapp/screens/leaveRequest/dropdown/text_form_field.dart';
+import 'package:leaveapp/services/push_notification.dart';
+import 'package:leaveapp/utils/api_endpoints.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LeaveRequestScreen extends StatefulWidget {
   const LeaveRequestScreen({super.key});
@@ -22,6 +27,7 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
     'Earned Leave',
     'Sick/Casual Leave (SL/CL)'
   ];
+  final CollectionReference postsRef = FirebaseFirestore.instance.collection('/test');
 
   List<String> list2 = <String>['raghu', 'victor', 'manoj', 'kartik'];
 
@@ -177,7 +183,8 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
                   ),
                   CustomButton(
                     onTap: () {
-
+                      sendData();
+                      print("requested for leave");
                     },
                     text: 'Request leave',
                     color: Colors.amber,
@@ -192,5 +199,11 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
         ),
       ),
     );
+  }
+  void sendData() async{
+    var data = await postsRef.doc("plipl001").get();
+    var DocData = data.data();
+    // print("data is ${(DocData as Map)['device_id']}");
+    PushNotifications.sendPushNotification((DocData as Map)['device_id'], "Test", "Test");
   }
 }

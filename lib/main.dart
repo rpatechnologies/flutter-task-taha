@@ -10,9 +10,8 @@ import 'package:leaveapp/services/push_notification.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await PushNotificationService().setupInteractedMessage();
+  await FirebaseApi().initNotifications();
   await initServices(); // Initialize any services if required
-  RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
   runApp(const MyApp());
 }
 

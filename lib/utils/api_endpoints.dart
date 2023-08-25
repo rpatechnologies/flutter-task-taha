@@ -8,4 +8,5 @@ class _AuthEndPoints {
   final String loginEmail = 'auth/login';
   final String employeeLeaveBalance = 'attendance/getEmployeeLeaveBalance';
   final String getEmployeeLeaveDetails = 'attendance/getEmployeeLeaveDetails';
+  final String getEmployeeRole = 'getEmployeeRole';
 }
