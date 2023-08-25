@@ -176,7 +176,9 @@ class _LeaveRequestScreenState extends State<LeaveRequestScreen> {
                     width: 15,
                   ),
                   CustomButton(
-                    onTap: () {},
+                    onTap: () {
+
+                    },
                     text: 'Request leave',
                     color: Colors.amber,
                   ),

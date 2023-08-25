@@ -22,8 +22,7 @@ class LoginController extends GetxController {
         'user_code': emailController.text.trim(),
         'password': passwordController.text
       };
-      http.Response response =
-          await http.post(url, body: jsonEncode(body), headers: headers);
+      http.Response response = await http.post(url, body: jsonEncode(body), headers: headers);
 
       if (response.statusCode == 200) {
         print(response.statusCode);

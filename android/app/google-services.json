@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "943706823880",
+    "project_id": "leaveapp-50c5e",
+    "storage_bucket": "leaveapp-50c5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943706823880:android:baaf81d4911655cc6899fd",
+        "android_client_info": {
+          "package_name": "com.example.leaveapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943706823880-vkalp3p24tgj96ki219tl4et9ej4pgvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS2UPa64DfwzHnqN7ztkSrVeJhESnwuCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943706823880-vkalp3p24tgj96ki219tl4et9ej4pgvh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "943706823880-80jt4g2uafjqo8s7j19aj23ljk8m9npe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.leaveapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
