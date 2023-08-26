@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 
 class CustomDropdown extends StatefulWidget {
   final List<String> dropdownItems;
+  final double width;
+  final double fontSize; // New font size parameter
 
-  const CustomDropdown({Key? key, required this.dropdownItems})
-      : super(key: key);
+  const CustomDropdown({
+    Key? key,
+    required this.dropdownItems,
+    required this.width,
+    required this.fontSize,
+  }) : super(key: key);
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
@@ -19,44 +25,46 @@ class _CustomDropdownState extends State<CustomDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9, // Set your desired width
+      width: widget.width,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey), // Border color
-        borderRadius: BorderRadius.circular(8.0), // Rounded corner radius
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: DropdownButtonFormField<String>(
         value: dropdownValue,
         hint: const Padding(
           padding: EdgeInsets.only(left: 15.0),
           child: Text('Select an option'),
-        ), // Hint text
+        ),
         decoration: const InputDecoration(
-          border: InputBorder.none, // Remove the default border
+          border: InputBorder.none,
         ),
         icon: Padding(
-          padding:
-              const EdgeInsets.only(right: 8.0), // Add padding to the right
+          padding: const EdgeInsets.only(right: 8.0),
           child: Transform.rotate(
             angle: -90 * (pi / 180),
             child: const Icon(CupertinoIcons.back),
-          ), // Set the icon
+          ),
         ),
         onChanged: (String? value) {
           setState(() {
             dropdownValue = value;
           });
         },
-        items:
-            widget.dropdownItems.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Text(value),
-            ),
-          );
-        }).toList(),
-        // Additional properties can be customized here
+        items: widget.dropdownItems.map<DropdownMenuItem<String>>(
+          (String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: Text(
+                  value,
+                  style: TextStyle(fontSize: widget.fontSize), // Set font size
+                ),
+              ),
+            );
+          },
+        ).toList(),
       ),
     );
   }
